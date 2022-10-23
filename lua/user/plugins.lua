@@ -57,8 +57,9 @@ return packer.startup(function(use)
   use { "goolord/alpha-nvim" }
 
   -- Colorschemes
-  use "dracula/vim"
-  use 'arcticicestudio/nord-vim'
+  -- use "dracula/vim"
+  use { 'navarasu/onedark.nvim' }
+  use { 'arcticicestudio/nord-vim' }
   use { "folke/tokyonight.nvim" }
   use { "lunarvim/darkplus.nvim" }
 
@@ -75,22 +76,22 @@ return packer.startup(function(use)
   use { "rafamadriz/friendly-snippets" } -- a bunch of snippets to use
 
   -- LSP
-  use { "neovim/nvim-lspconfig" } -- enable LSP
-  use { "williamboman/nvim-lsp-installer" } -- simple to use language server installer
-  use { "jose-elias-alvarez/null-ls.nvim" } -- for formatters and linters
+  -- use { "williamboman/nvim-lsp-installer" } -- simple to use language server installer
+  -- use { "jose-elias-alvarez/null-ls.nvim" } -- for formatters and linters
+  use { "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig"
+  } -- enable LSP
   use { "RRethy/vim-illuminate" }
 
-  use { 'mfussenegger/nvim-jdtls' }
+  use { "ray-x/lsp_signature.nvim" }
 
   -- Telescope
   use { "nvim-telescope/telescope.nvim" }
   use { 'rudism/telescope-dict.nvim' }
 
   -- Treesitter
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    commit = "518e27589c0463af15463c9d675c65e464efc2fe",
-  }
+  use { "nvim-treesitter/nvim-treesitter" }
 
   -- Git
   use { "lewis6991/gitsigns.nvim" }
@@ -100,83 +101,24 @@ return packer.startup(function(use)
   use { "rcarriga/nvim-dap-ui" }
   use { "ravenxrz/DAPInstall.nvim" }
 
+
+  -- Tex
+  use { "lervag/vimtex", 
+      config = function ()
+        vim.g.vimtex_view_general_viewer = 'zatura'
+        vim.g.vimtex_compiler_latexmk_engines = {
+            _ = '-xelatex'
+        }
+        vim.g.tex_comment_nospell = 1
+        vim.g.vimtex_compiler_progname = 'nvr'
+        vim.g.vimtex_view_general_options = [[--unique file:@pdf\#src:@line@tex]]
+        vim.g.vimtex_view_general_options_latexmk = '--unique'
+    end,
+  }
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
 end)
-
-
---return require('packer').startup(function()
---  -- Packer can manage itself
---  use 'wbthomason/packer.nvim'
---  use 'neovim/nvim-lspconfig'
---
---  use {
---    'w0rp/ale',
---    ft = {'sh', 'zsh', 'bash', 'c', 'cpp', 'cmake', 'html', 'markdown', 'racket', 'vim', 'tex'},
---    cmd = 'ALEEnable',
---    config = 'vim.cmd[[ALEEnable]]'
---  }
---
---  use 'lewis6991/impatient.nvim'
---
---  -- use 'ryanoasis/vim-devicons'
---  -- use 'scrooloose/nerdtree'
---
---  use {
---    'kyazdani42/nvim-tree.lua', 
---    requires = {
---      'kyazdani42/nvim-web-devicons', -- optional, for file icons
---    }
---  }
---
---
---  use {
---    'nvim-telescope/telescope.nvim', tag = '0.1.0',
---    requires = { {'nvim-lua/plenary.nvim'} }
---  }
---
---  use 'frazrepo/vim-rainbow'
---  use 'tpope/vim-fugitive'
---  use 'vim-airline/vim-airline'
---  use 'vim-airline/vim-airline-themes'
---  use 'wincent/ferret'
---  use 'junegunn/fzf'
---  use 'junegunn/fzf.vim'
---
---
---  -- cmp plugins
---  use { "hrsh7th/nvim-cmp" } -- The completion plugin
---  use { "hrsh7th/cmp-buffer" } -- buffer completions
---  use { "hrsh7th/cmp-path" } -- path completions
---  use { "saadparwaiz1/cmp_luasnip" } -- snippet completions
---  use { "hrsh7th/cmp-nvim-lsp" }
---  use { "hrsh7th/cmp-nvim-lua" }
---
---
---  -- use { 'neoclide/coc.nvim', run = 'yarn install --frozen-lockfile' }
---
---  use 'jackguo380/vim-lsp-cxx-highlight'
---
---  use 'lervag/vimtex'
-----  use 'preservim/nerdcommenter'
---
----- use 'honza/vim-snippets'
---  use { "L3MON4D3/LuaSnip" } --snippet engine
---  use { "rafamadriz/friendly-snippets" } -- a bunch of snippets to use
---
---  use 'arcticicestudio/nord-vim'
---  use 'cocopon/iceberg.vim'
---  use 'junegunn/seoul256.vim'
---  use 'tyrannicaltoucan/vim-deep-space'
---  -- You add plugins here  
---
---  use { "windwp/nvim-autopairs" } -- Autopairs, integrates with both cmp and treesitter
---
---    -- DAP
---  use { "mfussenegger/nvim-dap" }
---  use { "rcarriga/nvim-dap-ui" }
---  use { "ravenxrz/DAPInstall.nvim" }
---end)
